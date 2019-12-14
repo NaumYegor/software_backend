@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign in</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+	  body {
+	    background-color: linen;
+	  }
+
+	  input, button, p {
+	    margin: 5px;
+	  }
+
+	  p {
+	    color: red;
+	  }
+
+	  #login_error, #processing_login {
+	    display: none;
+	  }
+
+	  #forgot_password_msg {
+	    color: blue;
+		text-decoration: none;
+	  }
+	</style>
+  </head>
+  <body>
+    {% include 'includes/navbar.html' with username=username %}
+
+	<input type = 'text' name = 'username' id = 'username_field'><br>
+	<input type = 'password' name = 'password' id = 'password_field'><br>
+	<button id = 'login_button'>Login</button>
+	<a id = 'forgot_password_msg' href = '/accounts/restore_password/'>Forgot password?</a>
+	<a id = 'processing_login'>Just a second...</a>
+	<br>
+	<p id = 'login_error'>Wrong login or password</p>
+	<button onclick = 'location.replace("/accounts/registration/")'>Registration</button>
+	<script>
+	  function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+		  var cookies = document.cookie.split(';');
+	      for (var i = 0; i < cookies.length; i++) {
+			var cookie = cookies[i].trim();
+			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+			  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			  break;
+			}
+		  }
+		}
+		return cookieValue;
+	  }
+
+	  $('#login_button').click(function() {
+	    var username = $('#username_field').val(),
+		    password = $('#password_field').val();
+
+		var data = {username: username, password: password};
+
+		$('#processing_login').show();
+		$('#forgot_password_msg').hide();
+		$('#login_error').hide();
+
+		$.ajax({
+		  type: 'POST',
+		  async: true,
+		  url: '',
+		  data: data,
+		  headers: {
+			'X-CSRFToken': getCookie('csrftoken')
+		  },
+		  success: function(access) {
+		    if (access == false) {
+			  $('#login_error').show();
+			  $('#processing_login').hide();
+		      $('#forgot_password_msg').show();
+			} else {
+			  location.replace('/');
+			}
+		  },
+		  error: function() {
+		    alert('Error in AJAX((99(((((99((');
+		  }
+		})
+	  })
+	</script>
+  </body>
+</html>
