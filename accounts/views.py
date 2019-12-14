@@ -27,15 +27,15 @@ def sign_in(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username = username, password = password)
-        if user != None:
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
             auth.login(request, user)
             access = True
         else:
             access = False
 
         data = json.dumps(access)
-        return HttpResponse(data, content_type = 'application/json')
+        return HttpResponse(data, content_type='application/json')
 
 
 def logout(request):
@@ -46,7 +46,7 @@ def logout(request):
 def registration(request):
     if request.is_ajax():
         try:
-            client = Client.objects.get(account = request.user)
+            client = Client.objects.get(account=request.user)
             if client.status == 'u':
                 return redirect('/')
         except:
@@ -62,7 +62,7 @@ def registration(request):
 
         if request.user.is_authenticated:
             try:
-                client = Client.objects.get(account = request.user)
+                client = Client.objects.get(account=request.user)
                 if client.status != 'a':
                     status = 'user'
             except:
@@ -70,13 +70,12 @@ def registration(request):
         else:
             status = 'user'
 
-
-        if len(User.objects.filter(username = username)) != 0:
+        if len(User.objects.filter(username=username)) != 0:
             print('Existing username:', username)
             result = 'wrong_username'
             data = json.dumps(result)
-            return HttpResponse(data, content_type = 'application/json')
-        elif len(Client.objects.filter(email = email)) != 0:
+            return HttpResponse(data, content_type='application/json')
+        elif len(Client.objects.filter(email=email)) != 0:
             print('Existing email:', email)
             result = 'wrong_email'
             data = json.dumps(result)
@@ -85,14 +84,15 @@ def registration(request):
             print('Registration allowed')
             html_message = f'Congratulations, {name}!<br><br>\
                              Somebody (probably you) registered you in our\
-                             <a href = "https://127.0.0.1:8000/" style = "color: blue; text-decoration: none;">small developing site</a><br><br>\
+                             <a href = "https://127.0.0.1:8000/" style = "color: blue; text-decoration: none;">'\
+                           f'small developing site</a><br><br>\
                              Your username: {username}<br>\
                              Your password: {password}<br><br>\
                              Enjoy!'
-            send_mail('Account verification', 'Lol', 'Kek', [email], html_message = html_message)
+            send_mail('Account verification', 'Lol', 'Kek', [email], html_message=html_message)
 
-            new_user = User.objects.create_user(username = username,
-                                                password = password)
+            new_user = User.objects.create_user(username=username,
+                                                password=password)
             if status == 'admin':
                 new_user.is_staff = True
             new_user.save()
@@ -101,17 +101,17 @@ def registration(request):
                 auth.login(request, new_user)
 
             new_client = Client(
-                name = name,
-                surname = surname,
-                email = email,
-                status = status[0],
-                account = new_user
+                name=name,
+                surname=surname,
+                email=email,
+                status=status[0],
+                account=new_user
             )
             new_client.save()
                 
             result = 'OK'
             data = json.dumps(result)
-            return HttpResponse(data, content_type = 'application/json')
+            return HttpResponse(data, content_type='application/json')
     else:
         args = {}
         args.update(csrf(request))
@@ -137,29 +137,31 @@ def restore_password(request):
     else:
         try:
             username = request.GET['username'].lower()
-            if len(User.objects.filter(username = username)) == 0:
+            if len(User.objects.filter(username=username)) == 0:
                 success = False
                 data = json.dumps(success)
-                return HttpResponse(data, content_type = 'application/json')
+                return HttpResponse(data, content_type='application/json')
             else:
-                client = Client.objects.get(account = User.objects.get(username = username))
+                client = Client.objects.get(account=User.objects.get(username=username))
                 email = client.email
                 success = True
         except:
             email = request.GET['email'].lower()
-            if len(Client.objects.filter(email = email)) == 0:
+            if len(Client.objects.filter(email=email)) == 0:
                 success = False
                 data = json.dumps(success)
-                return HttpResponse(data, content_type = 'application/json')
+                return HttpResponse(data, content_type='application/json')
 
-        client = Client.objects.filter(email = email)[0]
+        client = Client.objects.filter(email=email)[0]
         name = client.name
         user = client.account
         new_password = ''.join(random.choice(string.ascii_letters) for i in range(16))
         user.set_password(new_password)
         user.save()
 
-        send_mail('Restoring password', 'Lol', 'Kek', [email], html_message = f'Hello, {name}!<br/><br/>Your new password on our small developing site: {new_password}<br/><br/>Enjoy!')
+        html_message = f'Hello, {name}!<br/><br/>' \
+                       f'Your new password on our small developing site: {new_password}<br/><br/>Enjoy!'
+        send_mail('Restoring password', 'Lol', 'Kek', [email], html_message=html_message)
         success = True
         data = json.dumps(success)
-        return HttpResponse(data, content_type = 'application/json')
+        return HttpResponse(data, content_type='application/json')
