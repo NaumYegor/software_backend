@@ -8,5 +8,6 @@ def home(request):
         args['username'] = request.user.username
     else:
         args['username'] = ''
+    print(args)
 
     return render(request, 'main/home.html', args)
