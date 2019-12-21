@@ -11,3 +11,12 @@ def home(request):
     print(args)
 
     return render(request, 'main/home.html', args)
+
+
+def company_info(request):
+    return render(request, 'main/company_info.html')
+
+
+def edu_info(request):
+    return render(request, 'main/edu_plan.html')
+
