@@ -20,8 +20,8 @@ def recent_photos(request):
         else:
             links = []
 
-        amount = request.GET["amount"]
-        if not amount.isdigit():
+        amount = request.GET.get("amount")
+        if amount is None or not amount.isdigit():
             return HttpResponse("Amount's been entered in a wrong way.")
         else:
             amount = int(amount)
