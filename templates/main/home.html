@@ -10,12 +10,6 @@
   </head>
   <body>
     {% include 'includes/navbar.html' with username=username %}
-    <h1>
-    {% if username != "" %}
-        {{username}}, you are logged in!
-    {% else %}
-        You are not logged in.
-    {% endif %}</h1>
     <h2>Hello! You are on our small developing site</h2>
   </body>
 </html>

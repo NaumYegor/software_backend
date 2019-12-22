@@ -1,37 +1,51 @@
-from django.shortcuts import render, HttpResponse
-import instagram
-import json
-import datetime as dt
+from django.shortcuts import HttpResponse
 
-account_name = 'student.nure'
-update_period = 300
-links = list()
-last_stamp = dt.datetime.now().timestamp()-update_period
+import requests
+
+from datetime import datetime
+
+import json
+
+
+def get_data():
+    global last_check
+
+    amount = 10
+    data = {
+        'student.nure': [],
+        'i_nure': [],
+        'senat.nure.ua': []
+    }
+
+    for inst in data:
+        posts = json.loads(requests.get(f'https://www.instagram.com/{inst}/?__a=1').text)['graphql']['user']['edge_owner_to_timeline_media']\
+                                                                                         ['edges'][:amount]
+        for post in posts:
+            post_code = post['node']['shortcode']
+            data[inst].append(f'https://www.instagram.com/p/{post_code}/')
+
+    return data
+
+last_check = datetime.now()
+data = get_data()
+
+check_period = 300
 
 
 def recent_photos(request):
+    global data, last_check, check_period
 
-    if request.method == 'GET':
-        global links
-        global last_stamp
+    if (datetime.now() - last_check).seconds >= check_period:
+        try:
+            if request.method == 'GET':
+                amount = int(request.GET['amount'])
+            else:
+                amount = int(request.POST['amount'])
+        except:
+            amount = 10
+        
+        data = get_data()
+        last_check = datetime.now()
 
-        if dt.datetime.now().timestamp()-last_stamp < update_period:
-            return HttpResponse(json.dumps(links))
-        else:
-            links = []
-
-        amount = request.GET.get("amount")
-        if amount is None or not amount.isdigit():
-            return HttpResponse("Amount's been entered in a wrong way.")
-        else:
-            amount = int(amount)
-            agent = instagram.WebAgent()
-            account = instagram.Account(account_name)
-            media, pointer = agent.get_media(account, count=amount)
-            for content in media:
-                link = 'https://www.instagram.com/p/{}/media/'.format(content)
-                links.append(link)
-            last_stamp = dt.datetime.now().timestamp()
-            return HttpResponse(json.dumps(links))
-    else:
-        return HttpResponse("This method is not allowed.")
+    data_to_return = json.dumps(data)
+    return HttpResponse(data_to_return, content_type='application/json')
