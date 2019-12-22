@@ -12,9 +12,9 @@ def get_data():
 
     amount = 10
     data = {
-        'student.nure': [],
-        'i_nure': [],
-        'senat.nure.ua': []
+        'student.nure': {},
+        'i_nure': {},
+        'senat.nure.ua': {}
     }
 
     for inst in data:
@@ -22,7 +22,8 @@ def get_data():
                                                                                          ['edges'][:amount]
         for post in posts:
             post_code = post['node']['shortcode']
-            data[inst].append(f'https://www.instagram.com/p/{post_code}/')
+            photo_code = post['node']['thumbnail_resources'][-1]['src']
+            data[inst][f'https://www.instagram.com/p/{post_code}/'] = photo_code
 
     return data
 
