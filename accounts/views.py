@@ -14,6 +14,7 @@ import json   # to convert data to json-response to AJAX-requests
 
 def sign_in(request):
     if not(request.is_ajax() and request.method == 'POST'):
+        print('NOT AJAX')
         if not request.user.is_authenticated:
             args = {}
             args.update(csrf(request))

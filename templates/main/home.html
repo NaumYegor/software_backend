@@ -323,12 +323,7 @@
 		<div class="row">
 			<div class="col-sm-10 col-sm-offset-1">
 				<div class="section-heading text-center text-uppercase  wow shake">
-					<h2>OUR <span>GALLERY</span></h2>
-
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua. Ut enim ad minim veniam, quis fugiat nulla pariatur.
-						Excepteur sint occaecat cupidatat nonenim ad minim veniam, proident, sunt in culpa qui officia
-						deserunt.</p>
+					<h2>OUR <span>INSTAGRAM</span></h2>
 				</div>
 			</div>
 
@@ -577,26 +572,40 @@
 </section>
 
 <section id="contact">
-	<!-- registration form-->
-	<div class="contact-form">
-		<div class="container">
-			<div class="row">
-				<form action="#">
-				    <h1>Sign in</h1>
-					<br/>
-					<div class="col-sm-4">
-						<label for="username">Username</label>
-						<input type="" class="form-control" id="username">
-					</div>
-					<div class="col-sm-4">
-						<label for="password">Password</label>
-						<input type="password" class="form-control" id="password">
-					</div>
-				</form>
+		<!-- registration form-->
+		<div class="contact-form">
+			<div class="container">
+				<div class="row">
+					{% if username == '' %}
+						<form action="#">
+							<h1 class="col-sm-12">Sign in</h1>
+							<br/>
+							<div class="col-sm-4">
+								<label for="username">Username</label>
+								<input type="" class="form-control" id="username_field">
+							</div>
+							<div class="col-sm-4">
+								<label for="password" style="white-space:pre">Password                          <a id = 'forgot_password_msg' href = '/accounts/restore_password/' style="color:red">Forgot password?</a></label>
+								<input type="password" class="form-control" id="password_field">
+							</div>
+							<br/>
+							<br/>
+							<br/>
+							<div class="col-sm-4">
+								<a class="btn btn-trans" id="login_button">SIGN IN</a>
+							</div>
+							<a class="col-sm-4" id='processing_login'>Just a second...</a>
+							<br>
+							<p class="col-sm-4" id='login_error'>Wrong login or password</p>
+						</form>
+					{% else %}
+						<h1 class="col-sm-12">You are staying in the system as <a style="color:green">{{ username }}</a>, but you can <a href="/accounts/logout/" style="color:red">Log out</a></h1>
+					{% endif %}
+				</div>
 			</div>
 		</div>
-	</div>
 </section>
+
 <!-- footer-area-->
 <footer>
 	<div class="container">

@@ -9,6 +9,8 @@ def home(request):
     else:
         args['username'] = ''
 
+    print(args['username'])
+
     return render(request, 'main/home.html', args)
 
 

@@ -86,9 +86,9 @@
 				//alert(data);
 				var photosContainer = jQuery('.gellery-item.text-center'),
 					changeInsts = {
-						'student.nure': 'student_nure',
+						'student.nure': 'student-nure',
 						'i_nure': 'i_nure',
-						'senat.nure.ua': 'senat_nure_ua'
+						'senat.nure.ua': 'senat-nure-ua'
 					},
 					photoHTML;
 				for (let inst in data) {
@@ -112,6 +112,55 @@
 
     });
 
+	$('#processing_login').hide();
+	$('#login_error').hide();
 
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+		    var cookies = document.cookie.split(';');
+	        for (var i = 0; i < cookies.length; i++) {
+				var cookie = cookies[i].trim();
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+
+	$('#login_button').click(function() {
+	    var username = $('#username_field').val(),
+		    password = $('#password_field').val();
+
+		var data = {username: username, password: password};
+
+		$('#processing_login').show();
+		$('#forgot_password_msg').hide();
+		$('#login_error').hide();
+
+		$.ajax({
+			type: 'POST',
+			async: true,
+			url: '/accounts/sign_in/',
+			data: data,
+			headers: {
+				'X-CSRFToken': getCookie('csrftoken')
+			},
+			success: function(access) {
+				if (access == false) {
+					$('#login_error').show();
+					$('#processing_login').hide();
+					$('#forgot_password_msg').show();
+				} else {
+					location.replace('/');
+				}
+			},
+			error: function() {
+				alert('Error in AJAX((99(((((99((');
+			}
+		})
+	});
 
 }(jQuery));
