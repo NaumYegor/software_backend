@@ -34,3 +34,14 @@ def edu_info(request):
         args['username'] = ''
 
     return render(request, 'main/edu_plan.html')
+
+
+def our_team(request):
+    args = {}
+
+    if request.user.is_authenticated:
+        args['username'] = request.user.username
+    else:
+        args['username'] = ''
+
+    return render(request, 'main/OurTeam/OurTeam.html')

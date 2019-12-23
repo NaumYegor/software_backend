@@ -112,8 +112,8 @@
 
     });
 
-	$('#processing_login').hide();
-	$('#login_error').hide();
+	jQuery('#processing_login').hide();
+	jQuery('#login_error').hide();
 
 	function getCookie(name) {
 		var cookieValue = null;
@@ -130,14 +130,13 @@
 		return cookieValue;
 	}
 
-	$('#login_button').click(function() {
+	jQuery('#login_button').click(function($) {
 	    var username = $('#username_field').val(),
 		    password = $('#password_field').val();
 
 		var data = {username: username, password: password};
 
 		$('#processing_login').show();
-		$('#forgot_password_msg').hide();
 		$('#login_error').hide();
 
 		$.ajax({
