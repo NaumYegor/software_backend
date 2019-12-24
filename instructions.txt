@@ -1,0 +1,11 @@
+1) Install Python >= 3.7
+
+2) Run "git clone https://github.com/NaumYegor/software_backend" OR clone this repository via GitHub
+
+3) Run in your command line next commands:
+
+	3.1) cd software_backend
+
+	3.2) python get-pip.py
+
+	3.3) pip install -r requirements.txt
