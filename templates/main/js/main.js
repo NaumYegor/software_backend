@@ -131,8 +131,8 @@
 	}
 
 	jQuery('#login_button').click(function($) {
-	    var username = $('#username_field').val(),
-		    password = $('#password_field').val();
+	    var username = jQuery('#username_field').val(),
+		password = jQuery('#password_field').val();
 
 		var data = {username: username, password: password};
 
