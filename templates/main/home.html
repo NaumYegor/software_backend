@@ -440,142 +440,38 @@
             <div class="container">
                 <div class="row no-gutter">
                     <div class="col-md-7 col-md-offset-1">
-
                         <div class="latest-news">
-
                             <h3>Последние новости</h3>
-
-                            <div class="news-content">
-                                <div class="news-date">
-                                    <h1>18</h1>
-
-                                    <h1>Dec</h1>
-                                </div>
-                                <div class="news-text">
-                                    <a href="/static/main/news/news_linux.html"><h5>Новая версия Edge будет доступна и на Linux!</h5></a>
-
-                                    <p>Microsoft официально объявила, что новая версия </p>
-                                    <p>их браузера Edge будет доступна и на Linux.</p>
-                                    <i class="fa fa-eye"></i> <span>116</span>
-                                    <i class="fa fa-comment"></i><span>7</span>
-                                </div>
-                            </div>
-                            <div class="news-content">
-                                <div class="news-date">
-                                    <h1>16</h1>
-
-                                    <h1>Dec</h1>
-                                </div>
-                                <div class="news-text">
-                                    <a href="/static/main/news/frontend_2020.html"><h5>10 вещей, которые должен знать фронтендер в 2020 году!</h5></a>
-
-                                    <p>Занимаешься фронтенд разработкой?</p>
-
-                                    <p>Мы нашли 10 вещей, которые тебе пригодятся в грядущем году.</p>
-                                    <i class="fa fa-eye"></i> <span>208</span>
-                                    <i class="fa fa-comment"></i><span>14</span>
-                                </div>
-                            </div>
-                            <div class="news-content wow bounceInLeft">
-                                <div class="news-date">
-                                    <h1>04</h1>
-
-                                    <h1>Dec</h1>
-                                </div>
-                                <div class="news-text">
-                                    <a href="/static/main/news/task_interview.html"><h5>Самая популярная задача на собеседовании</h5></a>
-
-                                    <p>При всей своей простоте именно эта задача является наиболее часто задаваемой  </p>
-                                    <p>при прохождении интервью практически на любую позицию разработчика.</p>
-
-                                    <i class="fa fa-eye"></i> <span>176</span>
-                                    <i class="fa fa-comment"></i><span>11</span>
-                                </div>
-                            </div>
-
+							{% for article in head_articles %}
+								<div class="news-content">
+									<div class="news-date">
+										<h1>{{ article.publication_date.day }}</h1>
+										<h1>{{ article.publication_date.month }}</h1>
+									</div>
+									<div class="news-text">
+										<a href="/news/{{ article.id }}"><h5>{{ article.name }}</h5></a>
+										<p>{{ article.short_text }}</p>
+									</div>
+								</div>
+							{% endfor %}
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12">
                         <div class="news-list">
-
-                            <div class="single-news">
-                                <div class="list-date">
-                                    <h4>28</h4>
-                                    <h4>Nov</h4>
-                                </div>
-                                <div class="list-text">
-                                    <a href="/static/main/news/unity_lesson.html"><h5>Уроки по Unity</h5></a>
-
-                                    <p>Бесплатный курс онлайн-лекций по Unity для начинающих.</p>
-                                    <i class="fa fa-eye"></i> <span>150</span>
-                                    <i class="fa fa-comment"></i><span>5</span>
-                                </div>
-                            </div>
-                            <div class="single-news">
-                                <div class="list-date">
-                                    <h4>25</h4>
-                                    <h4>Nov</h4>
-                                </div>
-                                <div class="list-text">
-                                    <a href="/static/main/news/vulnerability_whatsApp.html"><h5>Уязвимость WhatsApp!!!</h5></a>
-                                    <p>Стало известно о новой уязвимости в работе групповых чатов </p>
-                                    <i class="fa fa-eye"></i> <span>129</span>
-                                    <i class="fa fa-comment"></i><span>8</span>
-                                </div>
-                            </div>
-                            <div class="single-news">
-                                <div class="list-date">
-                                    <h4>16</h4>
-                                    <h4>Nov</h4>
-                                </div>
-                                <div class="list-text">
-                                    <a href="/static/main/news/electronic_signature.html"><h5>Электронную подпись защитят квантовым шифрованием</h5></a>
-
-
-                                    <i class="fa fa-eye"></i> <span>189</span>
-                                    <i class="fa fa-comment"></i><span>6</span>
-                                </div>
-                            </div>
-                            <div class="single-news">
-                                <div class="list-date">
-                                    <h4>10</h4>
-                                    <h4>Nov</h4>
-                                </div>
-                                <div class="list-text">
-                                    <a href="/static/main/news/lesson_unity_java.html"><h5>Уроки по UnityJava.</h5></a>
-
-                                    <p>Сортировки. Курс рассчитан на начинающих, начнем с азов</p>
-                                    <i class="fa fa-eye"></i> <span>201</span>
-                                    <i class="fa fa-comment"></i><span>3</span>
-                                </div>
-                            </div>
-                            <div class="single-news">
-                                <div class="list-date">
-                                    <h4>8</h4>
-                                    <h4>Nov</h4>
-                                </div>
-                                <div class="list-text">
-                                    <a href="/static/main/news/flash_drivers_microsoft.html"><h5>Microsoft замедлила все флешки в Windows 10</h5></a>
-
-                                    <p>Как их снова ускорить?</p>
-                                    <i class="fa fa-eye"></i> <span>307</span>
-                                    <i class="fa fa-comment"></i><span>16</span>
-                                </div>
-                            </div>
-                            <div class="single-news">
-                                <div class="list-date">
-                                    <h4>4</h4>
-                                    <h4>Nov</h4>
-                                </div>
-                                <div class="list-text">
-                                    <a href="#"><h5>Футбол для программистов</h5></a>
-
-                                    <p>Для написания команды достаточно минимальных навыков.</p>
-                                    <i class="fa fa-eye"></i> <span>169</span>
-                                    <i class="fa fa-comment"></i><span>27</span>
-                                </div>
-                            </div>
-
+							{% for article in articles %}
+								<div class="single-news">
+									<div class="list-date">
+										<h4>{{ article.publication_date.day }}</h4>
+										<h4>{{ article.publication_date.month }}</h4>
+									</div>
+									<div class="list-text">
+										<a href="/news/{{ article.id }}"><h5>{{ article.name }}</h5></a>
+										<p>{{ article.short_text }}</p>
+										<br/>
+										<br/>
+									</div>
+								</div>
+							{% endfor %}
                         </div>
                     </div>
                 </div>
